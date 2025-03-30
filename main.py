@@ -39,16 +39,16 @@ class HttpHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         pr_url = urllib.parse.urlparse(self.path)
         if pr_url.path == '/':
-            self.send_html_file('index.html')
+            self.send_html_file('templates/index.html')
         elif pr_url.path == '/message':
-            self.send_html_file('message.html')
+            self.send_html_file('templates/message.html')
         elif pr_url.path == '/read':
             self.render_read_page()
         else:
             if pathlib.Path().joinpath(pr_url.path[1:]).exists():
                 self.send_static()
             else:
-                self.send_html_file('error.html', 404)
+                self.send_html_file('templates/error.html', 404)
 
     def send_html_file(self, filename, status=200):
         self.send_response(status)
